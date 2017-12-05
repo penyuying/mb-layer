@@ -21,7 +21,7 @@ const builds = [{
     name: 'layer',
     output: {
         name: 'layer',
-        file: resolve('dist/layer.js')
+        file: resolve('dist/mb-layer.js')
     },
     plugins: [
       babel({
@@ -35,7 +35,7 @@ const builds = [{
     name: 'layer',
     output: {
         name: 'layer',
-        file: resolve('dist/layer.min.js')
+        file: resolve('dist/mb-layer.min.js')
     },
     plugins: [
       babel({
