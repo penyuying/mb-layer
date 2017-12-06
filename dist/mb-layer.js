@@ -1,7 +1,7 @@
 /*!
- * md5js v1.0.0
+ * mb-layer v1.0.1
  * (c) 2017-2017 penyuying
- * Released under the LGPL License.
+ * Released under the MIT License.
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :

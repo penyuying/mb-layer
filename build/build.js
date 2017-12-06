@@ -1,61 +1,32 @@
 const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
-const version = require('../package.json').version;
-const babel = require('rollup-plugin-babel');
 const uglify = require('uglify-js');
 const zlib = require('zlib');
+const mkdir=require('./utils/mkdir');
+const generateConfig=require('./utils/generateConfig');
+const resolve = require('./utils/resolve');
 
-const banner = '/*!\n' +
-  ' * md5js v' + version + '\n' +
-  ' * (c) 2017-' + new Date().getFullYear() + ' penyuying\n' +
-  ' * Released under the LGPL License.\n' +
-  ' */';
+require('shelljs/global');
 
-if (!fs.existsSync('dist')) {
-    fs.mkdirSync('dist');
-}
-const builds = [{
+
+mkdir('dist');
+
+cp('-R', 'node_modules/layui-layer/src/mobile/need/', 'dist/need/');
+
+build(generateConfig([{
     input: resolve('src/main.js'),
-    format: 'umd',
     name: 'layer',
     output: {
-        name: 'layer',
         file: resolve('dist/mb-layer.js')
-    },
-    plugins: [
-      babel({
-        exclude: 'node_modules/**' // only transpile our source code
-      })
-    ],
-    banner
-}, {
+    }
+},{
     input: resolve('src/main.js'),
-    format: 'umd',
     name: 'layer',
     output: {
-        name: 'layer',
         file: resolve('dist/mb-layer.min.js')
-    },
-    plugins: [
-      babel({
-        exclude: 'node_modules/**' // only transpile our source code
-      })
-    ],
-    banner
-}];
-
-const tell = function* (configs) {
-    let i = 0;
-    const total = configs.length;
-
-    while (i < total) {
-        yield configs[i];
-        i++;
     }
-};
-
-build(tell(builds));
+}]));
 
 /**
  * 生成文件
@@ -72,15 +43,7 @@ function build(configTell) {
     }
 }
 
-/**
- * 绝对路径
- * 
- * @param {any} p 路径名称
- * @returns {String}
- */
-function resolve(p) {
-    return path.resolve(__dirname, '../', p);
-}
+
 
 /**
  * build文件
